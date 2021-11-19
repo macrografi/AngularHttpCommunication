@@ -330,10 +330,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DataService": () => (/* binding */ DataService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4762);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 7716);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4762);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7716);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 1841);
 /* harmony import */ var app_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! app/data */ 8387);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 8002);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 8307);
+
 
 
 
@@ -357,14 +360,25 @@ let DataService = class DataService {
         return this.http.get('/api/books');
     }
     getBookById(id) {
-        return app_data__WEBPACK_IMPORTED_MODULE_0__.allBooks.find((book) => book.bookID === id);
+        return this.http.get(`/api/books/${id}`, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+                Accept: 'application/json',
+                Authorization: 'my-token',
+            }),
+        });
+    }
+    getOldBookId(id) {
+        return this.http.get(`/api/books/${id}`).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((b) => ({
+            bookTitle: b.title,
+            year: b.publicationYear,
+        })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.tap)((classicBook) => console.log(classicBook)));
     }
 };
 DataService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient }
 ];
-DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+DataService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
         providedIn: 'root',
     })
 ], DataService);
@@ -484,7 +498,7 @@ let EditBookComponent = class EditBookComponent {
     }
     ngOnInit() {
         let bookID = parseInt(this.route.snapshot.params['id']);
-        this.selectedBook = this.dataService.getBookById(bookID);
+        this.dataService.getBookById(bookID).subscribe((data) => (this.selectedBook = data), (err) => console.log(err), () => console.log('complete'));
     }
     setMostPopular() {
         this.dataService.setMostPopularBook(this.selectedBook);
@@ -500,7 +514,7 @@ EditBookComponent.ctorParameters = () => [
 EditBookComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
         selector: 'app-edit-book',
-        template: _raw_loader_edit_book_component_html__WEBPACK_IMPORTED_MODULE_0__.default
+        template: _raw_loader_edit_book_component_html__WEBPACK_IMPORTED_MODULE_0__.default,
     })
 ], EditBookComponent);
 
