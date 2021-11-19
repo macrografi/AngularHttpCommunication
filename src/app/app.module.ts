@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { AddBookComponent } from './add-book/add-book.component';
 import { AddReaderComponent } from './add-reader/add-reader.component';
 import { AppComponent } from './app.component';
@@ -18,17 +18,10 @@ import { BookTrackerErrorHandlerService } from './core/book-tracker-error-handle
     AddBookComponent,
     EditReaderComponent,
     EditBookComponent,
-    AddReaderComponent
+    AddReaderComponent,
   ],
-  providers: [
-    { provide: ErrorHandler, useClass: BookTrackerErrorHandlerService }
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: ErrorHandler, useClass: BookTrackerErrorHandlerService }],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

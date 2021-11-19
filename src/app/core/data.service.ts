@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { allBooks, allReaders } from 'app/data';
 import { Reader } from 'app/models/reader';
 import { Book } from 'app/models/book';
