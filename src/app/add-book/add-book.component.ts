@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Book } from "app/models/book";
+import { Book } from 'app/models/book';
+import { DataService } from 'app/core/data.service';
 
 @Component({
   selector: 'app-add-book',
   templateUrl: './add-book.component.html',
-  styles: []
+  styles: [],
 })
 export class AddBookComponent implements OnInit {
+  constructor(private dataService: DataService) {}
 
-  constructor() { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   saveBook(formValues: any): void {
     let newBook: Book = <Book>formValues;
     newBook.bookID = 0;
     console.log(newBook);
-    console.warn('Save new book not yet implemented.');
-  }
 
+    this.dataService.addBook(newBook).subscribe(
+      (data: Book) => console.log(data),
+      (err: any) => console.log(err)
+    );
+  }
 }

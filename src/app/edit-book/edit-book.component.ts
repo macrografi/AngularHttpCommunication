@@ -32,6 +32,9 @@ export class EditBookComponent implements OnInit {
   }
 
   saveChanges(): void {
-    console.warn('Save changes to book not yet implemented.');
+    this.dataService.updateBook(this.selectedBook).subscribe(
+      (data: void) => console.log(`${this.selectedBook.title} update successfully`),
+      (err: any) => console.log(err)
+    );
   }
 }
