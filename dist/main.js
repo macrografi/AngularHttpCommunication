@@ -499,6 +499,9 @@ let EditBookComponent = class EditBookComponent {
     ngOnInit() {
         let bookID = parseInt(this.route.snapshot.params['id']);
         this.dataService.getBookById(bookID).subscribe((data) => (this.selectedBook = data), (err) => console.log(err), () => console.log('complete'));
+        this.dataService
+            .getOldBookId(bookID)
+            .subscribe((data) => console.log(`Old book title : ${data.bookTitle}`));
     }
     setMostPopular() {
         this.dataService.setMostPopularBook(this.selectedBook);
