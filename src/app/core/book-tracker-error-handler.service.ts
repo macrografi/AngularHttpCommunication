@@ -3,7 +3,6 @@ import { BookTrackerError } from 'app/models/bookTrackerError';
 
 @Injectable()
 export class BookTrackerErrorHandlerService implements ErrorHandler {
-
   handleError(error: any): void {
     let customError: BookTrackerError = new BookTrackerError();
     customError.errorNumber = 200;
@@ -13,6 +12,5 @@ export class BookTrackerErrorHandlerService implements ErrorHandler {
     console.log(customError);
   }
 
-  constructor() { }
-
+  constructor() {}
 }
